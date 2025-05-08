@@ -1,0 +1,111 @@
+/*
+guidlines for dynamic memory management (avoiding memory leak):
+1 - using delete operator directly for auxilary dynamic variables
+2 - number of used delete operator shall be equal to that of new for auxilary dynamic variable.
+3 - member class dynamic variables shall be automatically be deleted through a deconstructor
+4 - only variable allocated inside the class shall be deallocated which means exported variables shall be kept intact.
+
+
+	Grid_OC mygrid(4);
+	Grid_OC mygrid(4,1,1);
+
+	double* ptr_root = mygrid.Grid_Points_;
+	double* ptr_q = mygrid.Quadrature_weight_;
+
+	double** ptr_A = mygrid._1st_derivatic_weight();
+	double** ptr_B = mygrid._2nd_derivatic_weight();
+
+	double** ptr_A = mygrid._1st_derivatic_weight_;
+	double** ptr_B = mygrid._2nd_derivatic_weight_;
+
+
+
+	comparison of performance
+	- normal array							1           stack
+	- standard array						12			stack
+	- raw pointer							3			heap
+	- scoped pointer						13			heap
+	- vector								150			heap
+
+
+
+
+
+	different alternatives to pass different grid objects to other classes:
+	- template             cleanest     prone to linker error
+	- inheritance
+	- type punning         not very safe
+
+
+
+
+
+	error:     processing should not continue
+	warning:   processing can be continued but something doesn't look right
+	Info:      information mainly from the solver!
+
+
+	NUMBERING:
+	"Distribution.E1				User-specified grid is outside 0 - 1.\n"
+				  W
+				  I
+
+
+Future Plans:
+
+1- more classes:
+    - ODE Matrix class
+	- solver class                     (ODEINT, Sundail, Armadilo, GSL)
+	- birth and death rates class
+
+2- self study about:
+    - OOA, OOD and UML diagrams
+	- safety in C++ 
+
+3- Doing Computational Physics Homeworks
+*/
+
+
+
+
+/*New action list:
+-****SUNDAIL****
+- Flag for each class (error and warning computed/not computed)
+- checking charactertic time
+- error and warning checking for both input and output and registering the report memebers(for each class)
+- x=0 for OC and FE (make zero all rows or column which should be zero)
+- execution time for each part separately
+- normalization of the distribution
+- reducing use of division in arithmatic
+- our countainer
+- Automatic meshing for internal dimension based on initial/inlet distribution and problem’s physics. / comsol: extra coarse, coarse, normal, fine, extra-fine  
+- flow class
+- GitHub acount      for citations after fist paper published
+- analytical solution for val;idation
+*/
+
+
+/*
+Subpro presentation
+- (1 Slide review)three different modules
+- (1 Slide review)how modules can be connected for a simulation
+- (1 slide review ) usage of distribution concept for modeling of multiphase flow
+- (2 Slides for UML class structure diagram)
+- (3 Slides) single Fluid and multi-phase fluid / internal functionalities and members, data flow / (thermodynamic engine) Peng-Robinson and other relations
+- (2 slides) Grids / internal functionalities and members, weight matrices / template programming and possible usage of each method / mathematical discretization for internal and external dimensions
+- (1 slide) equation parser as mother class 
+- (1 slide) distribution class /3 overloaded functions / secondary variables
+- (1 slides) interpolation comparison of hermit monotone an other
+- (1 slides) relations classes / breakage, coalescence, daughter, droplet velocity
+- (6 slides) solution class / dimensionless equations / predefined matrices and vector / optimizations (container etc) / animation for 10 overloaded functions / time integrator
+- (1 slide) verification with analytical solution
+- (1 slide) post processing
+- (1 slide) utility classes / logger, report
+- (1 slide) sample 0D user C++ codes
+- (1 slide) future plans / linking, implimenting other project results in the library
+
+* mamouvering on the applications
+* total number of code lines so far
+* animation
+
+*/
